@@ -16,6 +16,7 @@ $app['db.options'] = array(
     'user'     => 'root',
     'password' => null,
     'port'     => null,
+    'charset'  => 'utf8',
 );
 
 $app['db.config'] = $app->share( function() use ( $app ) {
@@ -34,4 +35,27 @@ $app['entity'] = $app->share( function() use ( $app ) {
     return new EntityFactory( $app );
 } );
 
-$nav = $app['entity']->getEntity( 'Nav' );
+$navs = $app['entity']->getEntity( 'Nav' );
+
+foreach( $navs as $nav ) {
+    echo $nav->name . ": \n\n";
+
+    foreach( $nav->children as $child ) {
+        if( $child->children ) {
+            echo '  '.$child->name . ":\n";
+            foreach( $child->children as $subchild ) {
+                echo '    '.$subchild->name . "\n";
+            }
+        } else {
+            echo '  '.$child->name . "\n";
+        }
+    }
+}
+
+echo "\n\nPorducts\n\n";
+
+$products = $app['entity']->getEntity( 'Product' );
+
+foreach( $products as $product ) {
+    echo $product->name."\n";
+}

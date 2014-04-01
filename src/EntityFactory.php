@@ -20,11 +20,7 @@ class EntityFactory
             $result = $entityname::getInstance( $this->app, $entityname, $params );
 
             if( $result AND count($result) > 0 ) {
-                if( count($result) == 1 ) {
-                    return $result[0];
-                } else {
-                    return $result;
-                }
+                return $result;
             }
         }
 
